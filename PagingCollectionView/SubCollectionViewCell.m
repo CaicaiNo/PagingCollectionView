@@ -31,7 +31,7 @@ static NSString *animationKey = @"PagingShakeAnimation";
     
     NSLog(@"delete");
     //删除功能
-//    [[NSNotificationCenter defaultCenter] postNotificationName:deleteCell object:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:deleteCell object:self];
     
 }
 

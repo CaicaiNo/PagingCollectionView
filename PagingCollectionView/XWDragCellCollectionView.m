@@ -73,7 +73,7 @@ typedef NS_ENUM(NSUInteger, XWDragCellCollectionViewScrollDirection) {
     _shakeWhenMoveing = YES;
     _shakeLevel = 4.0f;
     
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(collectionViewdeleteCell:) name:deleteCell object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(collectionViewdeleteCell:) name:deleteCell object:nil];
 }
 
 #pragma mark - longPressGesture methods
@@ -221,7 +221,8 @@ typedef NS_ENUM(NSUInteger, XWDragCellCollectionViewScrollDirection) {
         }
     }
     NSMutableArray *orignalSection = temp[indexPath.section];
-    [orignalSection removeObject:orignalSection[indexPath.item]];
+    [orignalSection removeObjectAtIndex:indexPath.item];
+//    [orignalSection removeObject:orignalSection[indexPath.item]]; //这种删除方式当数据有相同时，会出现bug
     //将重排好的数据传递给外部
     if ([self.delegate respondsToSelector:@selector(dragCellCollectionView:newDataArrayAfterMove:)]) {
         [self.delegate dragCellCollectionView:self newDataArrayAfterMove:temp.copy];
@@ -389,7 +390,7 @@ typedef NS_ENUM(NSUInteger, XWDragCellCollectionViewScrollDirection) {
 - (void)xw_enterEditingModel{
     _editing = YES;
     _oldMinimumPressDuration =  _longPressGesture.minimumPressDuration;
-    _longPressGesture.minimumPressDuration = 0.62;
+    _longPressGesture.minimumPressDuration = 0.4;
     if (_shakeWhenMoveing) {
         [self xwp_shakeAllCell];
         [self addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];

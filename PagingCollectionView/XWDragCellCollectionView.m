@@ -73,7 +73,7 @@ typedef NS_ENUM(NSUInteger, XWDragCellCollectionViewScrollDirection) {
     _shakeWhenMoveing = YES;
     _shakeLevel = 4.0f;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(collectionViewdeleteCell:) name:deleteCell object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(collectionViewdeleteCell:) name:deleteCell object:nil];
 }
 
 #pragma mark - longPressGesture methods

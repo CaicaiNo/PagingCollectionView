@@ -76,6 +76,8 @@
     [self.view addSubview:button];
     
     _select = NO;
+    
+//    self.view.backgroundColor = [[UIColor yellowColor] colorWithAlphaComponent:0.25f];
     // Do any additional setup after loading the view, typically from a nib.
 }
 

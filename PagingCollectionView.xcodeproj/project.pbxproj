@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F4EF93721D10FF6600E4DE23 /* pageCollectionviewGIf.gif in Resources */ = {isa = PBXBuildFile; fileRef = F4EF93701D10FF6600E4DE23 /* pageCollectionviewGIf.gif */; };
-		F4EF93731D10FF6600E4DE23 /* pageCollectionviewGIf3.gif in Resources */ = {isa = PBXBuildFile; fileRef = F4EF93711D10FF6600E4DE23 /* pageCollectionviewGIf3.gif */; };
+		F41F3C921D11435F0026B88B /* showgif.gif in Resources */ = {isa = PBXBuildFile; fileRef = F41F3C911D11435F0026B88B /* showgif.gif */; };
 		F4F33F5A1D100A8000B27438 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F33F591D100A8000B27438 /* main.m */; };
 		F4F33F5D1D100A8000B27438 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F33F5C1D100A8000B27438 /* AppDelegate.m */; };
 		F4F33F601D100A8000B27438 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F33F5F1D100A8000B27438 /* ViewController.m */; };
@@ -25,8 +24,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		F4EF93701D10FF6600E4DE23 /* pageCollectionviewGIf.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = pageCollectionviewGIf.gif; sourceTree = "<group>"; };
-		F4EF93711D10FF6600E4DE23 /* pageCollectionviewGIf3.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = pageCollectionviewGIf3.gif; sourceTree = "<group>"; };
+		F41F3C911D11435F0026B88B /* showgif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = showgif.gif; sourceTree = "<group>"; };
 		F4F33F551D100A8000B27438 /* PagingCollectionView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PagingCollectionView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4F33F591D100A8000B27438 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F4F33F5B1D100A8000B27438 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -109,8 +107,7 @@
 		F4F33F581D100A8000B27438 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				F4EF93701D10FF6600E4DE23 /* pageCollectionviewGIf.gif */,
-				F4EF93711D10FF6600E4DE23 /* pageCollectionviewGIf3.gif */,
+				F41F3C911D11435F0026B88B /* showgif.gif */,
 				F4F33F591D100A8000B27438 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -175,11 +172,10 @@
 			files = (
 				F4F33F681D100A8000B27438 /* LaunchScreen.storyboard in Resources */,
 				F4F33F651D100A8000B27438 /* Assets.xcassets in Resources */,
+				F41F3C921D11435F0026B88B /* showgif.gif in Resources */,
 				F4F33F631D100A8000B27438 /* Main.storyboard in Resources */,
-				F4EF93721D10FF6600E4DE23 /* pageCollectionviewGIf.gif in Resources */,
 				F4F33F871D100B3B00B27438 /* delete.png in Resources */,
 				F4F33F801D100AE300B27438 /* SubCollectionViewCell.xib in Resources */,
-				F4EF93731D10FF6600E4DE23 /* pageCollectionviewGIf3.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,5 +1,5 @@
 # PagingCollectionView
-横向排列且横向滑动的UICollectionview  (合适点个赞吧 支持一下) <br>
+横向排列且横向滑动的UICollectionview  (合适点个星吧 支持一下) <br>
 
 ![](https://github.com/shengpeng3344/PagingCollectionView/blob/master/PagingCollectionView/showgif.gif)
 

@@ -13,6 +13,7 @@
 static CGFloat itemSpacing = 10;
 static CGFloat lineSpacing = 10;
 
+typedef int (^pageCaculateBlock)(int itemNumber);
 
 @interface PagingCollectionViewLayout()
 
@@ -25,6 +26,8 @@ static CGFloat lineSpacing = 10;
 @property (nonatomic, strong) NSMutableArray *attributes;
 
 @property (nonatomic, strong) NSMutableArray *indexPathsToAnimate;
+
+@property (nonatomic, copy) pageCaculateBlock caculatePage;
 
 @end
 @implementation PagingCollectionViewLayout
@@ -52,10 +55,10 @@ static CGFloat lineSpacing = 10;
 {
     [super prepareLayout]; //需调用父类方法
     
-    self.itemSize = CGSizeMake(70, 85);
-    self.sectionInset = UIEdgeInsetsMake(5, 10, 5, 10);
-    self.minimumLineSpacing = 1;
-    self.minimumInteritemSpacing = 1;
+//    self.itemSize = CGSizeMake(70, 85);
+//    self.sectionInset = UIEdgeInsetsMake(5, 10, 5, 10);
+//    self.minimumLineSpacing = 1;
+//    self.minimumInteritemSpacing = 1;
     
     
     CGFloat itemWidth = self.itemSize.width;
@@ -94,7 +97,12 @@ static CGFloat lineSpacing = 10;
         lineSpacing = 0;
     }
 
-   
+
+    int itemNumber = 0;
+
+    itemNumber = itemNumber + (int)[self.collectionView numberOfItemsInSection:0];
+
+    pageNumber = (itemNumber - 1)/(_row*_line) + 1;
 }
 
 //- (void)prepareForCollectionViewUpdates:(NSArray<UICollectionViewUpdateItem *> *)updateItems
@@ -165,6 +173,9 @@ static CGFloat lineSpacing = 10;
 
 - (CGSize)collectionViewContentSize
 {
+    
+   
+    
     return CGSizeMake(self.collectionView.bounds.size.width*pageNumber, self.collectionView.bounds.size.height);
 }
 
@@ -186,9 +197,10 @@ static long  pageNumber = 1;
     if (indexPath.item >= number) {
 //        NSLog(@"indexpath.item:%ld",indexPath.item);
         p = indexPath.item/number;  //计算页数不同时的左间距
-        if ((p+1) > pageNumber) { //计算显示的页数
-            pageNumber = p+1;
-        }
+//        if ((p+1) > pageNumber) { //计算显示的页数
+//            pageNumber = p+1;
+//            
+//        }
 //        NSLog(@"%ld",p);
         m = (indexPath.item%number)/_line;
     }else{

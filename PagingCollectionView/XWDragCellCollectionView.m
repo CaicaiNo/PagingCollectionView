@@ -343,10 +343,11 @@ typedef NS_ENUM(NSUInteger, XWDragCellCollectionViewScrollDirection) {
     anim.duration=0.2;
 //    anim.removedOnCompletion = NO;
     NSArray *cells = [self visibleCells];
-    for (UICollectionViewCell *cell in cells) {
+    for (SubCollectionViewCell *cell in cells) {
     
         /**如果加了shake动画就不用再加了*/
         if (![cell.layer animationForKey:@"shake"]) {
+            cell.deleteButton.hidden = NO;
             [cell.layer addAnimation:anim forKey:@"shake"];
         }
     }
@@ -361,7 +362,8 @@ typedef NS_ENUM(NSUInteger, XWDragCellCollectionViewScrollDirection) {
         return;
     }
     NSArray *cells = [self visibleCells];
-    for (UICollectionViewCell *cell in cells) {
+    for (SubCollectionViewCell *cell in cells) {
+        cell.deleteButton.hidden = YES;
         [cell.layer removeAllAnimations];
     }
     [_tempMoveCell.layer removeAllAnimations];
@@ -396,8 +398,7 @@ typedef NS_ENUM(NSUInteger, XWDragCellCollectionViewScrollDirection) {
         [self addObserver:self forKeyPath:@"contentOffset" options:NSKeyValueObservingOptionNew context:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(xwp_foreground) name:UIApplicationWillEnterForegroundNotification object:nil];
         
-        //添加cell通知
-        [[NSNotificationCenter defaultCenter] postNotificationName:editStateChanged object:@YES];
+        
     }
 }
 
@@ -406,8 +407,6 @@ typedef NS_ENUM(NSUInteger, XWDragCellCollectionViewScrollDirection) {
     _longPressGesture.minimumPressDuration = _oldMinimumPressDuration;
     [self xwp_stopShakeAllCell];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
-    //添加cell通知
-    [[NSNotificationCenter defaultCenter] postNotificationName:editStateChanged object:@NO];
 }
 
 

@@ -32,7 +32,11 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     PagingCollectionViewLayout *layout = [[PagingCollectionViewLayout alloc]init];
-    
+    layout.itemSize = CGSizeMake(70, 85);
+    layout.sectionInset = UIEdgeInsetsMake(5, 10, 5, 10);
+    layout.minimumLineSpacing = 1;
+    layout.minimumInteritemSpacing = 1;
+
     
     CircleLayout *myLayout = [[CircleLayout alloc]init];
     myLayout.center = self.view.center;
@@ -130,9 +134,7 @@
     name = [array objectAtIndex:indexPath.item];
 //    cell.backgroundColor = [UIColor greenColor];
     [cell.headerButton setBackgroundImage:[UIImage imageNamed:name] forState:UIControlStateNormal];
-    if ([cell.layer animationForKey:@"shake"]) {
-        cell.deleteButton.hidden = NO;
-    }
+    
     cell.titleLabel.text = [NSString stringWithFormat:@"%ld",indexPath.item];
 //    cell.titleLabel.text = name;
     return cell;

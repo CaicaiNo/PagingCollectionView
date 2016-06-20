@@ -8,7 +8,7 @@
 
 #import "SubCollectionViewCell.h"
 #define angelToRandian(x)  ((x)/180.0*M_PI)
-static NSString *animationKey = @"PagingShakeAnimation";
+
 
 @interface SubCollectionViewCell ()
 
@@ -21,7 +21,6 @@ static NSString *animationKey = @"PagingShakeAnimation";
 - (void)awakeFromNib {
     [super awakeFromNib];
     // Initialization code
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleShake:) name:editStateChanged object:nil];
 
 }
 

@@ -24,8 +24,8 @@ static NSString *deleteCell = @"deleteCellNotification";
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 
 
-- (void)shake;
-
-- (void)stopShake;
+//- (void)shake;
+//
+//- (void)stopShake;
 
 @end

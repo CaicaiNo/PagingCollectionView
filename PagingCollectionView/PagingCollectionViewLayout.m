@@ -55,6 +55,7 @@ typedef int (^pageCaculateBlock)(int itemNumber);
 {
     [super prepareLayout]; //需调用父类方法
     
+    
 //    self.itemSize = CGSizeMake(70, 85);
 //    self.sectionInset = UIEdgeInsetsMake(5, 10, 5, 10);
 //    self.minimumLineSpacing = 1;

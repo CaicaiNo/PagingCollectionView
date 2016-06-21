@@ -27,7 +27,7 @@
 
 @implementation ViewController
 {
-    BOOL _select;
+    UIButton *_button;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -74,12 +74,13 @@
     //注册单元格
     [self.homeCollectionV registerNib:[UINib nibWithNibName:reusableCell
                                                      bundle: [NSBundle mainBundle]] forCellWithReuseIdentifier:reusableCell];
-    UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 40, 40)];
-    button.backgroundColor = [UIColor cyanColor];
-    [button addTarget:self action:@selector(handle) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:button];
+    _button = [[UIButton alloc]initWithFrame:CGRectMake(0, 20, 60, 40)];
+    _button.backgroundColor = [UIColor cyanColor];
+    [_button setTitle:@"编辑" forState:UIControlStateNormal];
+    [_button setTitle:@"取消" forState:UIControlStateSelected];
+    [_button addTarget:self action:@selector(handle) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_button];
     
-    _select = NO;
     
 //    self.view.backgroundColor = [[UIColor yellowColor] colorWithAlphaComponent:0.25f];
     // Do any additional setup after loading the view, typically from a nib.
@@ -87,12 +88,13 @@
 
 
 - (void)handle{
-    if (_select == NO) {
+    if (_button.selected == NO) {
         [self.homeCollectionV xw_enterEditingModel];
+
     }else{
         [self.homeCollectionV xw_stopEditingModel];
     }
-    _select = !_select;
+    _button.selected = !_button.selected;
 }
 
 - (void)didReceiveMemoryWarning {

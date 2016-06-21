@@ -8,6 +8,6 @@
 
 1.删除功能已完善<br>
 2.添加功能暂未完善<br>
-3.拖动时还有Bug<br>
+3.拖动时删除按钮会消失的bug已经修复
 
 博客地址：http://blog.csdn.net/shengpeng3344/article/details/51673707

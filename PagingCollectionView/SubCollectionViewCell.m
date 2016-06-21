@@ -22,6 +22,8 @@
     [super awakeFromNib];
     // Initialization code
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleShake:) name:editStateChanged object:nil];
+    
 }
 
 

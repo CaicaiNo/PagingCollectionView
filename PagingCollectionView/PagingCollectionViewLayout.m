@@ -1,6 +1,6 @@
 //
 //  PagingCollectionViewLayout.m
-//  MHJProjectTwo
+//  https://github.com/shengpeng3344/PagingCollectionView
 //
 //  Created by tangmi on 16/6/9.
 //  Copyright © 2016年 tangmi. All rights reserved.
@@ -13,7 +13,7 @@
 static CGFloat itemSpacing = 10;
 static CGFloat lineSpacing = 10;
 
-typedef int (^pageCaculateBlock)(int itemNumber);
+
 
 @interface PagingCollectionViewLayout()
 
@@ -27,7 +27,7 @@ typedef int (^pageCaculateBlock)(int itemNumber);
 
 @property (nonatomic, strong) NSMutableArray *indexPathsToAnimate;
 
-@property (nonatomic, copy) pageCaculateBlock caculatePage;
+
 
 @end
 @implementation PagingCollectionViewLayout
@@ -219,7 +219,8 @@ static long  pageNumber = 1;
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect{
 
     NSMutableArray *tmpAttributes = [NSMutableArray new];
-    for (int j = 0; j < self.collectionView.numberOfSections; j ++) {
+    for (int j = 0; j < self.collectionView.numberOfSections; j ++)
+    {
         NSInteger count = [self.collectionView numberOfItemsInSection:j];
         for (NSInteger i = 0; i < count; i++) {
             NSIndexPath *indexPath = [NSIndexPath indexPathForItem:i inSection:j];
@@ -227,10 +228,7 @@ static long  pageNumber = 1;
         }
     }
     self.attributes = tmpAttributes;
-
-
     return self.attributes;
-    
     
     
 }
@@ -253,7 +251,7 @@ static long  pageNumber = 1;
 //}
 
 - (BOOL)ShouldinvalidateLayoutForBoundsChange:(CGRect)newBounds{
-    return YES;
+    return NO;
 }
 
 

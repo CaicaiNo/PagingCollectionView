@@ -126,10 +126,9 @@
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-//    UINib *nib = [UINib nibWithNibName:reusableCell
-//                                bundle: [NSBundle mainBundle]];
-//    [collectionView registerNib:nib forCellWithReuseIdentifier:reusableCell];
+
     SubCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reusableCell forIndexPath:indexPath];
+    
     NSString *name;
     NSArray *array =  self.dataAll[indexPath.section];
     
@@ -139,6 +138,11 @@
     
     cell.titleLabel.text = [NSString stringWithFormat:@"%ld",indexPath.item];
 //    cell.titleLabel.text = name;
+    
+    if (cell.hidden) {  //防止hide属性的cell的重用导致部分cell消失
+        cell.hidden = NO;
+    }
+    
     return cell;
 }
 

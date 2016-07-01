@@ -60,6 +60,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F406FBF71D1B739200A04B86 /* PagingCollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				F4F33F851D100B3B00B27438 /* delete.png */,
+				F4F33F711D100AE300B27438 /* PagingCollectionViewLayout.h */,
+				F4F33F721D100AE300B27438 /* PagingCollectionViewLayout.m */,
+				F4F33F751D100AE300B27438 /* SubCollectionViewCell.h */,
+				F4F33F761D100AE300B27438 /* SubCollectionViewCell.m */,
+				F4F33F771D100AE300B27438 /* SubCollectionViewCell.xib */,
+				F4F33F781D100AE300B27438 /* UIView+SetRect.h */,
+				F4F33F791D100AE300B27438 /* UIView+SetRect.m */,
+				F4F33F7A1D100AE300B27438 /* XWDragCellCollectionView.h */,
+				F4F33F7B1D100AE300B27438 /* XWDragCellCollectionView.m */,
+			);
+			name = PagingCollectionView;
+			sourceTree = "<group>";
+		};
 		F4F33F4C1D100A8000B27438 = {
 			isa = PBXGroup;
 			children = (
@@ -81,18 +98,9 @@
 			children = (
 				F4F33F831D100B3B00B27438 /* CircleLayout.h */,
 				F4F33F841D100B3B00B27438 /* CircleLayout.m */,
-				F4F33F851D100B3B00B27438 /* delete.png */,
 				F4F33F5B1D100A8000B27438 /* AppDelegate.h */,
 				F4F33F5C1D100A8000B27438 /* AppDelegate.m */,
-				F4F33F711D100AE300B27438 /* PagingCollectionViewLayout.h */,
-				F4F33F721D100AE300B27438 /* PagingCollectionViewLayout.m */,
-				F4F33F751D100AE300B27438 /* SubCollectionViewCell.h */,
-				F4F33F761D100AE300B27438 /* SubCollectionViewCell.m */,
-				F4F33F771D100AE300B27438 /* SubCollectionViewCell.xib */,
-				F4F33F781D100AE300B27438 /* UIView+SetRect.h */,
-				F4F33F791D100AE300B27438 /* UIView+SetRect.m */,
-				F4F33F7A1D100AE300B27438 /* XWDragCellCollectionView.h */,
-				F4F33F7B1D100AE300B27438 /* XWDragCellCollectionView.m */,
+				F406FBF71D1B739200A04B86 /* PagingCollectionView */,
 				F4F33F5E1D100A8000B27438 /* ViewController.h */,
 				F4F33F5F1D100A8000B27438 /* ViewController.m */,
 				F4F33F611D100A8000B27438 /* Main.storyboard */,

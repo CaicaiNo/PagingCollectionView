@@ -1,6 +1,6 @@
 //
 //  SubCollectionViewCell.m
-//  MHJProjectTwo
+//  https://github.com/shengpeng3344/PagingCollectionView
 //
 //  Created by tangmi on 16/6/8.
 //  Copyright © 2016年 tangmi. All rights reserved.
@@ -17,6 +17,14 @@
 @end
 
 @implementation SubCollectionViewCell
+
+- (instancetype)init
+{
+    if (self = [super init]) {
+        self = [[[NSBundle mainBundle]loadNibNamed:@"SubCollectionViewCell" owner:self options:nil] lastObject];
+    }
+    return self;
+}
 
 - (void)awakeFromNib {
     [super awakeFromNib];

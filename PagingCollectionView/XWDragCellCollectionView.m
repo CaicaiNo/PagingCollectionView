@@ -36,6 +36,7 @@ typedef NS_ENUM(NSUInteger, XWDragCellCollectionViewScrollDirection) {
 @implementation XWDragCellCollectionView
 {
     NSTimer *_scrollerTimer;
+
 }
 @dynamic delegate;
 @dynamic dataSource;
@@ -74,7 +75,11 @@ typedef NS_ENUM(NSUInteger, XWDragCellCollectionViewScrollDirection) {
     _shakeLevel = 4.0f;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(collectionViewdeleteCell:) name:deleteCell object:nil];
+    
+   
 }
+
+
 
 #pragma mark - longPressGesture methods
 
@@ -168,6 +173,8 @@ typedef NS_ENUM(NSUInteger, XWDragCellCollectionViewScrollDirection) {
         [_tempMoveCell removeFromSuperview];
         cell.hidden = NO;
         self.userInteractionEnabled = YES;
+        
+        
     }];
 }
 
@@ -215,12 +222,16 @@ typedef NS_ENUM(NSUInteger, XWDragCellCollectionViewScrollDirection) {
     }
     //判断数据源是单个数组还是数组套数组的多section形式，YES表示数组套数组
     BOOL dataTypeCheck = ([self numberOfSections] != 1 || ([self numberOfSections] == 1 && [temp[0] isKindOfClass:[NSArray class]]));
+    NSMutableArray *orignalSection;
     if (dataTypeCheck) {
         for (int i = 0; i < temp.count; i ++) {
             [temp replaceObjectAtIndex:i withObject:[temp[i] mutableCopy]];
         }
+        orignalSection = temp[indexPath.section];
+    }else{
+        orignalSection = temp;
     }
-    NSMutableArray *orignalSection = temp[indexPath.section];
+
     [orignalSection removeObjectAtIndex:indexPath.item];
 //    [orignalSection removeObject:orignalSection[indexPath.item]]; //这种删除方式当数据有相同时，会出现bug
     //将重排好的数据传递给外部
@@ -300,38 +311,75 @@ typedef NS_ENUM(NSUInteger, XWDragCellCollectionViewScrollDirection) {
 
 - (void)xwp_edgeScroll{
     [self xwp_setScrollDirection];
+    if (_scrollDirection) {
+        if (_scrollerTimer != nil) {
+            return;
+        }
+        _scrollerTimer = [NSTimer timerWithTimeInterval:0 target:self selector:@selector(handleScrollCollection) userInfo:nil repeats:NO];
+        
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [_scrollerTimer fire];
+        });
+        
+        
+    }
+    
+    
+    
+    
+}
+
+- (void)handleScrollCollection
+{
+    [self xwp_setScrollDirection];
+    
+    NSLog(@"%f,%f",self.contentOffset.x,(self.contentSize.width - self.bounds.size.width));
+    
+    
+    
     switch (_scrollDirection) {
         case XWDragCellCollectionViewScrollDirectionLeft:{
-            //这里的动画必须设为NO
-            [self setContentOffset:CGPointMake(self.contentOffset.x - 4, self.contentOffset.y) animated:NO];
-            _tempMoveCell.center = CGPointMake(_tempMoveCell.center.x - 4, _tempMoveCell.center.y);
-            _lastPoint.x -= 4;
+            
+            if (self.contentOffset.x <= 0) {
+                break;
+            }
+            
+            [self setContentOffset:CGPointMake(self.contentOffset.x - self.bounds.size.width, self.contentOffset.y) animated:YES];
+            _tempMoveCell.center = CGPointMake(_tempMoveCell.center.x - self.bounds.size.width, _tempMoveCell.center.y);
+            _lastPoint.x -= self.bounds.size.width;
             
         }
             break;
         case XWDragCellCollectionViewScrollDirectionRight:{
-            [self setContentOffset:CGPointMake(self.contentOffset.x + 4, self.contentOffset.y) animated:NO];
-            _tempMoveCell.center = CGPointMake(_tempMoveCell.center.x + 4, _tempMoveCell.center.y);
-            _lastPoint.x += 4;
+            
+            if (self.contentOffset.x >= (self.contentSize.width - self.bounds.size.width)) {
+                break;
+            }
+            
+            [self setContentOffset:CGPointMake(self.contentOffset.x + self.bounds.size.width, self.contentOffset.y) animated:YES];
+            _tempMoveCell.center = CGPointMake(_tempMoveCell.center.x + self.bounds.size.width, _tempMoveCell.center.y);
+            _lastPoint.x += self.bounds.size.width;
             
         }
             break;
-        case XWDragCellCollectionViewScrollDirectionUp:{
-            [self setContentOffset:CGPointMake(self.contentOffset.x, self.contentOffset.y - 4) animated:NO];
-            _tempMoveCell.center = CGPointMake(_tempMoveCell.center.x, _tempMoveCell.center.y - 4);
-            _lastPoint.y -= 4;
-        }
-            break;
-        case XWDragCellCollectionViewScrollDirectionDown:{
-            [self setContentOffset:CGPointMake(self.contentOffset.x, self.contentOffset.y + 4) animated:NO];
-            _tempMoveCell.center = CGPointMake(_tempMoveCell.center.x, _tempMoveCell.center.y + 4);
-            _lastPoint.y += 4;
-        }
-            break;
+//        case XWDragCellCollectionViewScrollDirectionUp:{
+//            [self setContentOffset:CGPointMake(self.contentOffset.x, self.contentOffset.y - 4) animated:YES];
+//            _tempMoveCell.center = CGPointMake(_tempMoveCell.center.x, _tempMoveCell.center.y - 4);
+//            _lastPoint.y -= 4;
+//        }
+//            break;
+//        case XWDragCellCollectionViewScrollDirectionDown:{
+//            [self setContentOffset:CGPointMake(self.contentOffset.x, self.contentOffset.y + 4) animated:YES];
+//            _tempMoveCell.center = CGPointMake(_tempMoveCell.center.x, _tempMoveCell.center.y + 4);
+//            _lastPoint.y += 4;
+//        }
+//            break;
         default:
             break;
     }
     
+    _scrollerTimer = nil;
+    [_scrollerTimer invalidate];
 }
 
 - (void)xwp_shakeAllCell{
@@ -341,7 +389,7 @@ typedef NS_ENUM(NSUInteger, XWDragCellCollectionViewScrollDirection) {
     anim.repeatCount=MAXFLOAT;
     anim.autoreverses = YES;
     anim.duration=0.2;
-//    anim.removedOnCompletion = NO;
+    anim.removedOnCompletion = NO;
     NSArray *cells = [self visibleCells];
     for (SubCollectionViewCell *cell in cells) {
     
@@ -406,6 +454,8 @@ typedef NS_ENUM(NSUInteger, XWDragCellCollectionViewScrollDirection) {
     _editing = NO;
     _longPressGesture.minimumPressDuration = _oldMinimumPressDuration;
     [self xwp_stopShakeAllCell];
+    
+    
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:editStateChanged object:@NO];

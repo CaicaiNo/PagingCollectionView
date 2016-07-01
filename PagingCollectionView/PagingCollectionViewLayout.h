@@ -1,6 +1,6 @@
 //
 //  PagingCollectionViewLayout.h
-//  MHJProjectTwo
+//  https://github.com/shengpeng3344/PagingCollectionView
 //
 //  Created by Simply on 16/6/9.
 //  Copyright © 2016年 Simply. All rights reserved.

@@ -14,17 +14,30 @@ static NSString *editStateChanged = @"editStateChanged";
 
 static NSString *deleteCell = @"deleteCellNotification";
 
+
+@class SubCollectionViewCell;
+
+@protocol SubCollectionViewCellDelegate <NSObject>
+
+@optional
+
+- (void)modelCellButton:(SubCollectionViewCell *)cell;  //删除cell响应方法
+
+@end
+
 @interface SubCollectionViewCell : UICollectionViewCell
 
-@property (weak, nonatomic) IBOutlet UIButton *headerButton;
+@property (nonatomic, weak)   id<SubCollectionViewCellDelegate>  delegate;
 
+@property (weak, nonatomic) IBOutlet UIButton *headerButton;
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 
 @property (weak, nonatomic) IBOutlet UIButton *deleteButton;
 
+@property (nonatomic, strong) NSIndexPath *indexPath;
 
-
+@property (nonatomic, strong) id data;
 
 //- (void)shake;
 //

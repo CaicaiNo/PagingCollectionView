@@ -18,13 +18,13 @@
 
 @implementation SubCollectionViewCell
 
-- (instancetype)init
-{
-    if (self = [super init]) {
-        self = [[[NSBundle mainBundle]loadNibNamed:@"SubCollectionViewCell" owner:self options:nil] lastObject];
-    }
-    return self;
-}
+//- (instancetype)init
+//{
+//    if (self = [super init]) {
+//        self = [[[NSBundle mainBundle]loadNibNamed:@"SubCollectionViewCell" owner:self options:nil] lastObject];
+//    }
+//    return self;
+//}
 
 - (void)awakeFromNib {
     [super awakeFromNib];
@@ -34,14 +34,24 @@
     
 }
 
-
+- (void)setData:(id)data
+{
+    _data = data;
+    
+    //这里完成cell的初始化设置工作  设置图片 title等
+    
+}
 
 - (IBAction)clickDeleteButton:(id)sender {
     
     NSLog(@"delete");
     //删除功能
-    [[NSNotificationCenter defaultCenter] postNotificationName:deleteCell object:self];
+//    [[NSNotificationCenter defaultCenter] postNotificationName:deleteCell object:self];
     
+    //原使用notification会出现野指针问题，我们使用代理，将数据源在delegate中操作，这下没问题
+    if (_delegate && [_delegate respondsToSelector:@selector(modelCellButton:)]) {
+        [_delegate modelCellButton:self];
+    }
 }
 
 - (void)handleShake:(NSNotification*)sender

@@ -36,7 +36,7 @@ typedef NS_ENUM(NSUInteger, XWDragCellCollectionViewScrollDirection) {
 @implementation XWDragCellCollectionView
 {
     NSTimer *_scrollerTimer;
-
+    
 }
 @dynamic delegate;
 @dynamic dataSource;
@@ -74,9 +74,7 @@ typedef NS_ENUM(NSUInteger, XWDragCellCollectionViewScrollDirection) {
     _shakeWhenMoveing = YES;
     _shakeLevel = 4.0f;
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(collectionViewdeleteCell:) name:deleteCell object:nil];
     
-   
 }
 
 
@@ -92,7 +90,7 @@ typedef NS_ENUM(NSUInteger, XWDragCellCollectionViewScrollDirection) {
     longPress.minimumPressDuration = _minimumPressDuration;
     _longPressGesture = longPress;
     [self addGestureRecognizer:longPress];
-
+    
 }
 
 
@@ -119,6 +117,14 @@ typedef NS_ENUM(NSUInteger, XWDragCellCollectionViewScrollDirection) {
     
     //获取手指所在的cell
     _originalIndexPath = [self indexPathForItemAtPoint:[longPressGesture locationOfTouch:0 inView:longPressGesture.view]];
+    //取消长按进入编辑状态  并改为进行代理操作
+    if (self.longPressGesture.minimumPressDuration == _minimumPressDuration) {
+        if (self.delegate&&[self.delegate respondsToSelector:@selector(dragCellCollectionView: didLongPressCell:)]) {
+            [self.delegate dragCellCollectionView:self didLongPressCell:_originalIndexPath];
+        }
+        return;
+    }
+    
     UICollectionViewCell *cell = [self cellForItemAtIndexPath:_originalIndexPath];
     UIView *tempMoveCell = [cell snapshotViewAfterScreenUpdates:NO];
     cell.hidden = YES;
@@ -126,7 +132,7 @@ typedef NS_ENUM(NSUInteger, XWDragCellCollectionViewScrollDirection) {
     _tempMoveCell.frame = cell.frame;
     [self addSubview:_tempMoveCell];
     
-//    //开启边缘滚动定时器
+    //    //开启边缘滚动定时器
     [self xwp_setEdgeTimer];
     //开启抖动
     if (_shakeWhenMoveing && !_editing) {
@@ -147,7 +153,7 @@ typedef NS_ENUM(NSUInteger, XWDragCellCollectionViewScrollDirection) {
     if ([self.delegate respondsToSelector:@selector(dragCellCollectionViewCellisMoving:)]) {
         [self.delegate dragCellCollectionViewCellisMoving:self];
     }
-
+    
     CGFloat tranX = [longPressGesture locationOfTouch:0 inView:longPressGesture.view].x - _lastPoint.x;
     CGFloat tranY = [longPressGesture locationOfTouch:0 inView:longPressGesture.view].y - _lastPoint.y;
     _tempMoveCell.center = CGPointApplyAffineTransform(_tempMoveCell.center, CGAffineTransformMakeTranslation(tranX, tranY));
@@ -210,36 +216,6 @@ typedef NS_ENUM(NSUInteger, XWDragCellCollectionViewScrollDirection) {
 
 
 #pragma mark - private methods
-
-- (void)collectionViewdeleteCell:(NSNotification*)noti
-{
-    UICollectionViewCell *cell = noti.object;
-    NSIndexPath *indexPath = [self indexPathForCell:cell];
-    NSMutableArray *temp = @[].mutableCopy;
-    //获取数据源
-    if ([self.dataSource respondsToSelector:@selector(dataSourceArrayOfCollectionView:)]) {
-        [temp addObjectsFromArray:[self.dataSource dataSourceArrayOfCollectionView:self]];
-    }
-    //判断数据源是单个数组还是数组套数组的多section形式，YES表示数组套数组
-    BOOL dataTypeCheck = ([self numberOfSections] != 1 || ([self numberOfSections] == 1 && [temp[0] isKindOfClass:[NSArray class]]));
-    NSMutableArray *orignalSection;
-    if (dataTypeCheck) {
-        for (int i = 0; i < temp.count; i ++) {
-            [temp replaceObjectAtIndex:i withObject:[temp[i] mutableCopy]];
-        }
-        orignalSection = temp[indexPath.section];
-    }else{
-        orignalSection = temp;
-    }
-
-    [orignalSection removeObjectAtIndex:indexPath.item];
-//    [orignalSection removeObject:orignalSection[indexPath.item]]; //这种删除方式当数据有相同时，会出现bug
-    //将重排好的数据传递给外部
-    if ([self.delegate respondsToSelector:@selector(dragCellCollectionView:newDataArrayAfterMove:)]) {
-        [self.delegate dragCellCollectionView:self newDataArrayAfterMove:temp.copy];
-    }
-    [self deleteItemsAtIndexPaths:@[indexPath]];
-}
 
 - (void)xwp_moveCell{
     for (UICollectionViewCell *cell in [self visibleCells]) {
@@ -362,18 +338,18 @@ typedef NS_ENUM(NSUInteger, XWDragCellCollectionViewScrollDirection) {
             
         }
             break;
-//        case XWDragCellCollectionViewScrollDirectionUp:{
-//            [self setContentOffset:CGPointMake(self.contentOffset.x, self.contentOffset.y - 4) animated:YES];
-//            _tempMoveCell.center = CGPointMake(_tempMoveCell.center.x, _tempMoveCell.center.y - 4);
-//            _lastPoint.y -= 4;
-//        }
-//            break;
-//        case XWDragCellCollectionViewScrollDirectionDown:{
-//            [self setContentOffset:CGPointMake(self.contentOffset.x, self.contentOffset.y + 4) animated:YES];
-//            _tempMoveCell.center = CGPointMake(_tempMoveCell.center.x, _tempMoveCell.center.y + 4);
-//            _lastPoint.y += 4;
-//        }
-//            break;
+            //        case XWDragCellCollectionViewScrollDirectionUp:{
+            //            [self setContentOffset:CGPointMake(self.contentOffset.x, self.contentOffset.y - 4) animated:YES];
+            //            _tempMoveCell.center = CGPointMake(_tempMoveCell.center.x, _tempMoveCell.center.y - 4);
+            //            _lastPoint.y -= 4;
+            //        }
+            //            break;
+            //        case XWDragCellCollectionViewScrollDirectionDown:{
+            //            [self setContentOffset:CGPointMake(self.contentOffset.x, self.contentOffset.y + 4) animated:YES];
+            //            _tempMoveCell.center = CGPointMake(_tempMoveCell.center.x, _tempMoveCell.center.y + 4);
+            //            _lastPoint.y += 4;
+            //        }
+            //            break;
         default:
             break;
     }
@@ -392,7 +368,7 @@ typedef NS_ENUM(NSUInteger, XWDragCellCollectionViewScrollDirection) {
     anim.removedOnCompletion = NO;
     NSArray *cells = [self visibleCells];
     for (SubCollectionViewCell *cell in cells) {
-    
+        
         /**如果加了shake动画就不用再加了*/
         if (![cell.layer animationForKey:@"shake"]) {
             cell.deleteButton.hidden = NO;

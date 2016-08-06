@@ -27,6 +27,7 @@
  */
 - (void)dragCellCollectionView:(XWDragCellCollectionView *)collectionView newDataArrayAfterMove:(NSArray *)newDataArray;
 
+- (void)dragCellCollectionView:(XWDragCellCollectionView *)collectionView didLongPressCell:(NSIndexPath*)indexPath;
 
 @optional
 

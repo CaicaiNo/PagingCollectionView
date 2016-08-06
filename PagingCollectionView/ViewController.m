@@ -13,7 +13,7 @@
 
 #import "CircleLayout.h"
 #import "XWDragCellCollectionView.h"
-@interface ViewController () <UICollectionViewDelegate,UICollectionViewDataSource,XWDragCellCollectionViewDelegate,XWDragCellCollectionViewDataSource>
+@interface ViewController () <UICollectionViewDelegate,UICollectionViewDataSource,XWDragCellCollectionViewDelegate,XWDragCellCollectionViewDataSource,SubCollectionViewCellDelegate,UIAlertViewDelegate>
 
 @property (nonatomic, strong) NSArray *data;
 
@@ -109,18 +109,17 @@
 }
 
 - (NSArray *)dataSourceArrayOfCollectionView:(XWDragCellCollectionView *)collectionView{
-    return  self.dataAll;
+    return  self.data;
 }
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView
 {
-    return self.dataAll.count;
+    return 1;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    NSArray *array = self.dataAll[section];
-    return array.count;
+    return self.data.count;
 
 }
 
@@ -129,10 +128,10 @@
 
     SubCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reusableCell forIndexPath:indexPath];
     
+    cell.delegate = self;
     NSString *name;
-    NSArray *array =  self.dataAll[indexPath.section];
     
-    name = [array objectAtIndex:indexPath.item];
+    name = [self.data objectAtIndex:indexPath.item];
 //    cell.backgroundColor = [UIColor greenColor];
     [cell.headerButton setBackgroundImage:[UIImage imageNamed:name] forState:UIControlStateNormal];
     
@@ -144,6 +143,26 @@
     }
     
     return cell;
+}
+
+- (void)dragCellCollectionView:(XWDragCellCollectionView *)collectionView didLongPressCell:(NSIndexPath *)indexPath
+{
+    UIAlertView *alertView = [[UIAlertView alloc]initWithTitle:@"操作列表" message:nil delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"修改名称",@"配置设备",@"编辑模式", nil];
+//    alertView.tag = 1000;
+    [alertView show];
+}
+
+- (void)modelCellButton:(SubCollectionViewCell *)cell  //删除响应方法
+{
+    NSIndexPath *indexPath = [self.homeCollectionV indexPathForCell:cell];
+    
+    NSMutableArray *tmpArray = [NSMutableArray arrayWithArray:self.data];
+    
+    [tmpArray removeObjectAtIndex:indexPath.item];
+    
+    self.data = tmpArray;
+    
+    [self.homeCollectionV deleteItemsAtIndexPaths:@[indexPath]];
 }
 
 

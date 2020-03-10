@@ -1,5 +1,5 @@
 # PagingCollectionView
-横向排列且横向滑动的UICollectionview  (合适点个星吧 支持一下) <br>
+横向排列且横向滑动的UICollectionview <br>
 
 ![](https://github.com/shengpeng3344/PagingCollectionView/blob/master/PagingCollectionView/showgif.gif)
 
@@ -8,4 +8,5 @@
 
 BUG提示:震动在切换屏时，cell重用仍会导致震动动画消失，如果不需要，可以取消震动效果
 
-博客地址：http://blog.csdn.net/shengpeng3344/article/details/51673707
+
+可以使用数学方法(计算位置)，原生流式布局实现横向排列，这个实现仅供学习！
